@@ -1,0 +1,9 @@
+README
+======
+
+This is a test code about libcurl API.
+
+COMPILE
+-------
+
+$ ./waf configure; ./waf build
