@@ -20,6 +20,7 @@ def build(bld):
     bld(features = 'c cprogram',
         source = 'src/curl_tut.c',
         target = 'curl_tut',
+        ccflags = '-g',
         lib = ['curl'])
     # ビルドの情報を書く
     # waf build 時に呼ばれる
