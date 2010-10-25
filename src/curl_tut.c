@@ -2,10 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-
 #include <unistd.h>
 
 #include <curl/curl.h>
+
+#define FILENAME_LENGTH 256
 
 int initialize(void)
 {
@@ -20,7 +21,7 @@ int terminate(void)
 
 int usage(void)
 {
-    printf("usage: curl_tut [url]\n");
+    printf("usage: curl_tut [-o output] [url]\n");
     return 0;
 }
 
@@ -33,31 +34,30 @@ int main(int argc, char **argv)
   int ch;
   extern char *optarg;
   extern int optind, opterr;
-  char filename[256] = "";
+  char filename[FILENAME_LENGTH] = "";
 
   char *url;
-
 
   while ((ch = getopt(argc, argv, "o:")) != -1){
     switch (ch){
     case 'o':
-      strncpy(filename,optarg,256);
+      strncpy(filename,optarg,FILENAME_LENGTH);
       break;
     default:
       usage();
       return 1;
     }
   }
+
   argc -= optind;
   argv += optind;
 
   if(argc != 1){
-    fprintf(stderr, "argc:%d\n", argc);
     usage();
     return 1;
-  }else{
-    url = argv[0];
   }
+  
+  url = argv[0];
 
   if (strlen(filename) != 0) {
     if ((fp = fopen(filename, "w")) == NULL){
@@ -67,7 +67,6 @@ int main(int argc, char **argv)
   } else {
     fp = stdout;
   }
-
 
   initialize();
 
